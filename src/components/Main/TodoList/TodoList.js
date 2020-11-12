@@ -4,7 +4,12 @@ import classNames from 'classnames/bind';
 import { TodoShape } from '../../../shapes/TodoShape';
 import { Todo } from './Todo/Todo';
 
-export const TodoList = ({ todos }) => (
+export const TodoList = ({
+  todos,
+  onTodoDelete,
+  onTodoComplete,
+  onTodoUpdate,
+}) => (
   <ul className="list">
     {
       todos.map(todo => (
@@ -14,7 +19,12 @@ export const TodoList = ({ todos }) => (
           }
           key={todo.id}
         >
-          <Todo {...todo} />
+          <Todo
+            todo={todo}
+            onTodoComplete={onTodoComplete}
+            onTodoUpdate={onTodoUpdate}
+            onTodoDelete={onTodoDelete}
+          />
         </li>
       ))
     }
@@ -23,4 +33,7 @@ export const TodoList = ({ todos }) => (
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(TodoShape).isRequired,
+  onTodoUpdate: PropTypes.func.isRequired,
+  onTodoDelete: PropTypes.func.isRequired,
+  onTodoComplete: PropTypes.func.isRequired,
 };
