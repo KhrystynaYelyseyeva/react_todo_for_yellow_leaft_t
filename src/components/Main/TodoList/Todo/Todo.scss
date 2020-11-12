@@ -1,0 +1,76 @@
+.Todo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #cdcccc;
+
+  &__title-label {
+    flex-grow: 1;
+  }
+
+  &__title {
+     font-size: 23px;
+  }
+
+  &__category {
+    font-size: 16px;
+    text-align: center;
+    border-radius: 25px;
+    width: 120px;
+    margin-right: 20px;
+    padding: 5px;
+    background: rgba(249, 186, 5, 0.5);
+  }
+
+  &__checkbox {
+    display: none;
+
+    & + span {
+      position: relative;
+      padding-left: 35px;
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid;
+        border-radius: 5px;
+        position: absolute;
+        left: 0;
+        top: calc(50% - 10px);
+        opacity: .6;
+        transition: all .12s,border-color .08s;
+      }
+    }
+
+    &:checked + span::before{
+      width: 10px;
+      top: -6px;
+      left: 8px;
+      border-radius: 0;
+      opacity: 1;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__delete-btn {
+    font-size: inherit;
+    font-weight: 700;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #cdcdcf;
+    border: 0;
+    transition: background-color .12s;
+    cursor: pointer;
+
+    &:hover {
+      background: #c80046;
+    }
+  }
+}
