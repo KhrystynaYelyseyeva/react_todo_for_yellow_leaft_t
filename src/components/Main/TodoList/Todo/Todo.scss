@@ -66,11 +66,15 @@
     border-radius: 5px;
     background: #cdcdcf;
     border: 0;
-    transition: background-color .12s;
+    transition: all .2s ease;
     cursor: pointer;
 
     &:hover {
       background: #c80046;
+    }
+
+    &:active {
+      transform: scale(.96);
     }
   }
 }

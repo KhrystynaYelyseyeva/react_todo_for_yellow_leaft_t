@@ -11,13 +11,13 @@ export const NewTodoForm = ({ addTodo }) => {
   const [titleError, setTitleError] = useState(false);
   const [categoryError, setCategoryError] = useState(false);
 
-  const handleChangeInput = ({ value }) => {
-    setTitle(value);
+  const handleChangeInput = ({ target }) => {
+    setTitle(target.value);
     setTitleError(false);
   };
 
-  const handleChangeSelector = ({ value }) => {
-    setCategory(value);
+  const handleChangeSelector = ({ target }) => {
+    setCategory(target.value);
     setCategoryError(false);
   };
 
