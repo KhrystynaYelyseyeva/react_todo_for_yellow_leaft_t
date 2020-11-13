@@ -30,13 +30,13 @@ function App() {
     dispatch(todosActions.delete(todoId));
   };
 
-  const onTodosFilter = (todoId) => {
-    dispatch(todosActions.filter(todoId));
+  const onTodosFilterByCategory = (category) => {
+    dispatch(todosActions.filterByCategory(category));
   };
 
   return (
     <div className="App">
-      <Header onTodosFilter={onTodosFilter} />
+      <Header onTodosFilterByCategory={onTodosFilterByCategory} />
       <Main
         addTodo={addTodo}
         todos={todos}

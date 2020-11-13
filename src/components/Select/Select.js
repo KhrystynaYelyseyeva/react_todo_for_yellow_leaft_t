@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { categories } from '../../api/categories';
+import state from '../../api/initialSrate';
 
 export const Select = ({ name, value, onChange, className }) => (
   <label htmlFor={name}>
@@ -15,7 +15,7 @@ export const Select = ({ name, value, onChange, className }) => (
       <option value="">
         Choose category
       </option>
-      {categories.map(category => (
+      {state.categories.map(category => (
         <option value={category} key={category}>
           {category}
         </option>

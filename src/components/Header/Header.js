@@ -5,12 +5,12 @@ import { Select } from '../Select/Select';
 
 import './Header.scss';
 
-export const Header = ({ onTodosFilter }) => {
+export const Header = ({ onTodosFilterByCategory }) => {
   const [category, setCategory] = useState('');
 
   const handleChangeSelector = ({ target }) => {
     setCategory(target.value);
-    onTodosFilter(target.value);
+    onTodosFilterByCategory(target.value);
   };
 
   return (
@@ -26,7 +26,7 @@ export const Header = ({ onTodosFilter }) => {
       </svg>
 
       <Select
-        className="Header__selector"
+        className="Header__select"
         onChange={handleChangeSelector}
         value={category}
         name="category"
@@ -41,5 +41,5 @@ export const Header = ({ onTodosFilter }) => {
 };
 
 Header.propTypes = {
-  onTodosFilter: PropTypes.func.isRequired,
+  onTodosFilterByCategory: PropTypes.func.isRequired,
 };
