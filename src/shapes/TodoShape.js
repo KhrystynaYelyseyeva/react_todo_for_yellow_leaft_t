@@ -5,4 +5,4 @@ export const TodoShape = PropTypes.shape({
   title: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
   category: PropTypes.string.isRequired,
-}).isRequired;
+});

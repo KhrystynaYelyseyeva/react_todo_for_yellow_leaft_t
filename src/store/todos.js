@@ -5,6 +5,7 @@ const COMPLETE = 'todos/COMPLETE';
 const UPDATE = 'todos/UPDATE';
 const DELETE = 'todos/DELETE';
 const FILTER_BY_CATEGORY = 'todos/FILTER_BY_CATEGORY';
+const FILTER_BY_QUERY = 'todos/FILTER_BY_QUERY';
 
 export const actions = {
   add: todo => ({
@@ -27,6 +28,10 @@ export const actions = {
   filterByCategory: category => ({
     type: FILTER_BY_CATEGORY,
     category,
+  }),
+  filterByQuery: query => ({
+    type: FILTER_BY_QUERY,
+    queryRegular: new RegExp(query, 'gi'),
   }),
 };
 
@@ -75,8 +80,14 @@ const todosReducer = (state = initialState, action) => {
     case FILTER_BY_CATEGORY:
       return {
         ...state,
-        filteredTodo: state.todos
+        filteredTodos: state.todos
           .filter(todo => todo.category === action.category),
+      };
+    case FILTER_BY_QUERY:
+      return {
+        ...state,
+        filteredTodos: state.todos
+          .filter(todo => action.queryRegular.test(todo.title)),
       };
     default:
       return state;
