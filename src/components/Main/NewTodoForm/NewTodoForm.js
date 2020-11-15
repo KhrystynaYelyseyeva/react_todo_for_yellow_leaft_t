@@ -5,19 +5,19 @@ import { Select } from '../../Select/Select';
 
 import './NewTodoForm.scss';
 
-export const NewTodoForm = ({ addTodo }) => {
+export const NewTodoForm = ({ addTodo, newId }) => {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [categoryError, setCategoryError] = useState(false);
 
-  const handleChangeInput = ({ value }) => {
-    setTitle(value);
+  const handleChangeInput = ({ target }) => {
+    setTitle(target.value);
     setTitleError(false);
   };
 
-  const handleChangeSelector = ({ value }) => {
-    setCategory(value);
+  const handleChangeSelector = ({ target }) => {
+    setCategory(target.value);
     setCategoryError(false);
   };
 
@@ -38,6 +38,8 @@ export const NewTodoForm = ({ addTodo }) => {
     addTodo({
       title,
       category,
+      completed: false,
+      id: newId,
     });
 
     setCategory('');
@@ -64,12 +66,17 @@ export const NewTodoForm = ({ addTodo }) => {
           +
         </button>
       </form>
-      {titleError && <span>Please enter the title</span>}
-      {categoryError && <span>Please choose the category</span>}
+      {titleError && (
+        <span className="Error-massage">Please enter the title</span>
+      )}
+      {categoryError && (
+        <span className="Error-massage">Please choose the category</span>
+      )}
     </>
   );
 };
 
 NewTodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
+  newId: PropTypes.number.isRequired,
 };

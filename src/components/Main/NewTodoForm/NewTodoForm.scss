@@ -6,9 +6,45 @@
   border: 1px solid #cdcccc;
   border-radius: 25px;
 
-  &__btn {
-    font-size: 24px;
-    background-color: transparent;
-    border: none;
+  &__input-label {
+    flex-grow: 1;
   }
+
+  &__input {
+    font-size: 25px;
+  }
+
+  &__select {
+    font-size: 16px;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 25px;
+    border-color: transparent;
+    background: #cdcdcf;
+  }
+
+  &__btn {
+    font-size: 25px;
+    font-weight: 700;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background: #f9ba05;
+    border: 0;
+    transition: all .2s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: #000;
+    }
+
+    &:active {
+      transform: scale(.96);
+    }
+  }
+}
+
+.Error-massage{
+  color: #c80046;
+  margin-left: 25px;
 }

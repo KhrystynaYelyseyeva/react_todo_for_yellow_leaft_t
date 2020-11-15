@@ -1,29 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TodoShape } from '../../shapes/TodoShape';
 import { TodoList } from './TodoList/TodoList';
 import { NewTodoForm } from './NewTodoForm/NewTodoForm';
-import initialTodos from '../../api/todos';
 
-export const Main = () => {
-  const [todos, setTodos] = useState(initialTodos);
+const INCREMENT_NEW_ID = 1;
 
-  const addTodo = (newTodoValues) => {
-    const newTodo = {
-      ...newTodoValues,
-      id: todos.length + 1,
-      completed: false,
-    };
-
-    setTodos(current => [...current, newTodo]);
-  };
-
-  return (
-    <main className="Main">
-      <NewTodoForm
-        addTodo={addTodo}
+export const Main = ({
+  addTodo,
+  todos,
+  onTodoDelete,
+  onTodoUpdate,
+  onTodoComplete,
+}) => (
+  <main className="Main">
+    <NewTodoForm
+      addTodo={addTodo}
+      newId={todos.length + INCREMENT_NEW_ID}
+    />
+    {!!todos.length && (
+      <TodoList
+        todos={todos}
+        onTodoUpdate={onTodoUpdate}
+        onTodoDelete={onTodoDelete}
+        onTodoComplete={onTodoComplete}
       />
-      {!!todos.length && (
-        <TodoList todos={todos} />
-      )}
-    </main>
-  );
+    )}
+  </main>
+);
+
+Main.propTypes = {
+  todos: PropTypes.arrayOf(TodoShape).isRequired,
+  addTodo: PropTypes.func.isRequired,
+  onTodoUpdate: PropTypes.func.isRequired,
+  onTodoDelete: PropTypes.func.isRequired,
+  onTodoComplete: PropTypes.func.isRequired,
 };

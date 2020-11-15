@@ -13,6 +13,10 @@
      font-size: 23px;
   }
 
+  &__title--is-completed {
+    text-decoration: line-through;
+  }
+
   &__category {
     font-size: 16px;
     text-align: center;
@@ -21,6 +25,10 @@
     margin-right: 20px;
     padding: 5px;
     background: rgba(249, 186, 5, 0.5);
+  }
+
+  &__category--is-completed {
+    background: rgba(243, 243, 243, 0.5);
   }
 
   &__checkbox {
@@ -66,11 +74,15 @@
     border-radius: 5px;
     background: #cdcdcf;
     border: 0;
-    transition: background-color .12s;
+    transition: all .2s ease;
     cursor: pointer;
 
     &:hover {
       background: #c80046;
+    }
+
+    &:active {
+      transform: scale(.96);
     }
   }
 }
