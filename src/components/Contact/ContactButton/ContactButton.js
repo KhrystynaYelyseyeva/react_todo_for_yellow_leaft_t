@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import './ContactButton.scss';
 
-export const ContactButton = ({ onClick, type, text, className }) => (
+export const ContactButton = memo(({ onClick, type, text, className }) => (
   <button
     type={type === 'submit' ? 'submit' : 'button'}
     className={className}
@@ -15,7 +15,7 @@ export const ContactButton = ({ onClick, type, text, className }) => (
     <span />
     {text}
   </button>
-);
+));
 
 ContactButton.propTypes = {
   onClick: PropTypes.func,

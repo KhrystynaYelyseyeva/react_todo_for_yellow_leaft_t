@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { TodoShape } from '../../../../shapes/TodoShape';
 
 import './Todo.scss';
 
-export const Todo = ({ todo, onTodoDelete, onTodoUpdate, onTodoComplete }) => {
+export const Todo = memo(({
+  todo,
+  onTodoDelete,
+  onTodoUpdate,
+  onTodoComplete,
+}) => {
   const { id, title, completed, category } = todo;
 
   return (
@@ -54,7 +59,7 @@ export const Todo = ({ todo, onTodoDelete, onTodoUpdate, onTodoComplete }) => {
       </button>
     </div>
   );
-};
+});
 
 Todo.propTypes = {
   todo: TodoShape.isRequired,

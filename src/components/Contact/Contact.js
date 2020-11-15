@@ -1,72 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import { ContactButton } from './ContactButton/ContactButton';
 import { ContactForm } from './ContactForm/ContactForm';
 
 import './Contact.scss';
 
-export const Contact = ({ handleOpenContact }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [massage, setMassage] = useState('');
+const initialData = {
+  userName: '',
+  email: '',
+  massage: '',
+};
+
+export const Contact = memo(({ handleOpenContact }) => {
+  const [formData, setFormData] = useState(initialData);
+  const [errors, setErrors] = useState({
+    userNameError: false,
+    emailError: false,
+  });
   const [isSuccess, setIsSuccess] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
 
   // eslint-disable-next-line max-len,no-control-regex
   const patternEmail = /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\]\\.,;:\s@\\"]+\.)+[^<>()[\]\\.,;:\s@\\"]{2,})$/i;
 
-  const handleChangeName = ({ target }) => {
-    setName(target.value);
-    setNameError(false);
+  const handleChange = name => ({ target: { value } }) => {
+    setFormData(oldData => ({
+      ...oldData,
+      [name]: value,
+    }));
+    setErrors({
+      userNameError: false,
+      emailError: false,
+    });
   };
 
-  const handleChangeEmail = ({ target }) => {
-    setEmail(target.value);
-    setEmailError(false);
-  };
+  const handleReset = useCallback(() => {
+    setFormData(initialData);
+    setErrors({
+      userNameError: false,
+      emailError: false,
+    });
+  }, []);
 
-  const handleChangeMassage = ({ target }) => {
-    setMassage(target.value);
-  };
+  const handleCancel = useCallback(() => {
+    handleReset();
+    setIsSuccess(false);
+    handleOpenContact();
+  }, []);
 
-  const handleReset = () => {
-    setName('');
-    setEmail('');
-    setMassage('');
-    setNameError(false);
-    setEmailError(false);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
-    if (!name) {
-      setNameError(true);
+    if (formData.userName.length < 2) {
+      setErrors(oldErrors => ({
+        ...oldErrors,
+        userNameError: false,
+      }));
 
       return;
     }
 
-    if (!patternEmail.test(email)) {
-      setEmailError(true);
+    if (!patternEmail.test(formData.email)) {
+      setErrors(oldErrors => ({
+        ...oldErrors,
+        emailError: false,
+      }));
 
       return;
     }
 
-    handleReset();
     setIsSuccess(true);
-  };
+  }, []);
 
-  const handleBlurName = () => {
-    setName(current => current.trim());
-  };
-
-  const handleBlurMassage = () => {
-    setMassage(current => current.trim());
-  };
-
-  const handleBlurEmail = () => {
-    setEmail(current => current.trim().toLocaleLowerCase());
+  const handleBlur = (name) => {
+    setFormData(oldData => ({
+      ...oldData,
+      [name]: oldData[name].trim(),
+    }));
   };
 
   return (
@@ -85,27 +94,20 @@ export const Contact = ({ handleOpenContact }) => {
         <div className="container">
           <h2>Contact</h2>
           <ContactForm
-            handleChangeEmail={handleChangeEmail}
-            handleChangeName={handleChangeName}
-            handleChangeMassage={handleChangeMassage}
-            name={name}
-            emailError={emailError}
-            handleOpenContact={handleOpenContact}
-            email={email}
-            nameError={nameError}
-            massage={massage}
+            formData={formData}
+            errors={errors}
+            handleCancel={handleCancel}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
             handleReset={handleReset}
             handleSubmit={handleSubmit}
-            handleBlurName={handleBlurName}
-            handleBlurEmail={handleBlurEmail}
-            handleBlurMassage={handleBlurMassage}
           />
         </div>
       )
       }
     </div>
   );
-};
+});
 
 Contact.propTypes = {
   handleOpenContact: PropTypes.func.isRequired,

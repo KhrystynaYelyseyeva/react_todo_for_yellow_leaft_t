@@ -1,0 +1,84 @@
+.ThemeButton {
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.3px;
+  font-weight: 900;
+  vertical-align: middle;
+  color: #f9ba05;
+  position: relative;
+  padding: 16px;
+  transition: all .2s ease;
+  background: transparent;
+  border-color: transparent;
+
+  & span {
+    text-transform: uppercase;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    transition: all .3s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+
+    &:active {
+      transform: scale(.96);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &--light {
+    &:before {
+      background: rgba(black, .8);
+    }
+
+    span {
+      color: black;
+    }
+
+    &:hover {
+      span {
+        color: white;
+      }
+
+      &:before {
+        background: rgba(black, 1);
+      }
+    }
+  }
+
+  &--dark {
+    &:before {
+      background: rgba(white, .8);
+    }
+
+    span {
+      color: white;
+    }
+
+    &:hover {
+      span {
+        color: black;
+      }
+
+      &:before {
+        background: rgba(white, 1);
+      }
+    }
+  }
+}

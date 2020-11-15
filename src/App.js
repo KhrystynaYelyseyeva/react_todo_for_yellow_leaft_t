@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { MainPage } from './components/MainPage/MainPage';
 import { Header } from './components/Header/Header';
-import { Main } from './components/Main/Main';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import { Contact } from './components/Contact/Contact';
+import { CompletedPage } from './components/CompletedPage/CompletedPage';
+import { Filters } from './components/Filters/Filters';
+
+import { ThemeProvider, ThemeContext } from './context/ThemeContext';
+import { getTheme } from './themes/themes';
 
 import { getTodos, getFilteredTodos } from './store/index';
 import { actions as todosActions } from './store/todos';
 
-import './App.css';
 import './styles/general.scss';
+import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +25,8 @@ function App() {
   const [isFilter, setIsFilter] = useState(false);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [isOpenContact, setIsOpenContact] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
 
   const addTodo = (todo) => {
     dispatch(todosActions.add(todo));
@@ -44,6 +52,11 @@ function App() {
     dispatch(todosActions.filterByQuery(query));
   };
 
+  const onTodosFilterCompleted = (completed) => {
+    onFilter(true);
+    dispatch(todosActions.filterByCompleted(completed));
+  };
+
   const onFilter = (bool) => {
     setIsFilter(bool);
   };
@@ -57,33 +70,77 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header
-        onTodosFilterByCategory={onTodosFilterByCategory}
-        onTodosFilterByQuery={onTodosFilterByQuery}
-        onFilter={onFilter}
-        handleOpenSidebar={handleOpenSidebar}
-      />
-      <Main
-        addTodo={addTodo}
-        isFilter={isFilter}
-        todos={todos}
-        filteredTodos={filteredTodos}
-        onTodoComplete={onTodoComplete}
-        onTodoUpdate={onTodoUpdate}
-        onTodoDelete={onTodoDelete}
-      />
-      <Sidebar
-        isOpenSidebar={isOpenSidebar}
-        handleOpenSidebar={handleOpenSidebar}
-        handleOpenContact={handleOpenContact}
-      />
-      {isOpenContact && (
-        <Contact
+    <ThemeProvider>
+      <div className={`App ${getTheme(theme, 'app.body')}`}>
+        <Header
+          onTodosFilterByCategory={onTodosFilterByCategory}
+          onTodosFilterByQuery={onTodosFilterByQuery}
+          onFilter={onFilter}
+          handleOpenSidebar={handleOpenSidebar}
+        />
+        <main>
+          <h2>
+            Todos
+            <Route path="/todos/completed/1"> - Completed</Route>
+            <Route path="/todos/completed/0"> - Uncompleted</Route>
+          </h2>
+
+          <Switch>
+            <Route
+              path="/todos/completed/:completed"
+              render={({ match }) => (
+                <CompletedPage
+                  match={match}
+                  todos={todos}
+                  filteredTodos={filteredTodos}
+                  isFilter={isFilter}
+                  onTodoComplete={onTodoComplete}
+                  onTodoUpdate={onTodoUpdate}
+                  onTodoDelete={onTodoDelete}
+                  onTodosFilterCompleted={onTodosFilterCompleted}
+                />
+              )}
+            />
+
+            <Route
+              path="/todos"
+              render={() => (
+                <>
+                  <Filters
+                    onTodosFilterByCategory={onTodosFilterByCategory}
+                    onTodosFilterByQuery={onTodosFilterByQuery}
+                    onFilter={onFilter}
+                  />
+                  <MainPage
+                    addTodo={addTodo}
+                    isFilter={isFilter}
+                    onFilter={onFilter}
+                    todos={todos}
+                    filteredTodos={filteredTodos}
+                    onTodoComplete={onTodoComplete}
+                    onTodoUpdate={onTodoUpdate}
+                    onTodoDelete={onTodoDelete}
+                  />
+                </>
+              )}
+            />
+
+            <Redirect to="/todos" />
+          </Switch>
+        </main>
+
+        <Sidebar
+          isOpenSidebar={isOpenSidebar}
+          handleOpenSidebar={handleOpenSidebar}
           handleOpenContact={handleOpenContact}
         />
-      )}
-    </div>
+        {isOpenContact && (
+          <Contact
+            handleOpenContact={handleOpenContact}
+          />
+        )}
+      </div>
+    </ThemeProvider>
   );
 }
 
