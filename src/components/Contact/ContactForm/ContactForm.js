@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -6,116 +6,114 @@ import { ContactButton } from '../ContactButton/ContactButton';
 
 import './ContactForm.scss';
 
-export const ContactForm = ({
-  handleOpenContact,
+export const ContactForm = memo(({
+  handleCancel,
   handleSubmit,
-  name,
-  nameError,
-  handleChangeName,
-  email,
-  emailError,
-  handleChangeEmail,
-  massage,
-  handleChangeMassage,
+  formData,
+  errors,
+  handleChange,
   handleReset,
-  handleBlurName,
-  handleBlurEmail,
-  handleBlurMassage,
-}) => (
-  <form onSubmit={handleSubmit}>
-    <label
-      className={classNames(
-        'ContactForm__input-label', {
-          'ContactForm__input-label--is-error': nameError,
-        },
-      )}
-    >
-      Your name
-      {nameError && (
-        <span className="error">
-          is required !
-        </span>
-      )}
-      <input
-        className="ContactForm__input"
-        type="text"
-        name="name"
-        value={name}
-        required
-        onChange={handleChangeName}
-        onBlur={handleBlurName}
+  handleBlur,
+}) => {
+  const { userName, email, massage } = formData;
+  const { userNameError, emailError } = errors;
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label
+        className={classNames(
+          'ContactForm__input-label', {
+            'ContactForm__input-label--is-error': userNameError,
+          },
+        )}
+      >
+        Your name*
+        {userNameError && (
+          <span className="error">
+            is required !
+          </span>
+        )}
+        <input
+          className="ContactForm__input"
+          type="text"
+          name="name"
+          value={userName}
+          required
+          onChange={event => handleChange('userName')(event)}
+          onBlur={() => handleBlur('userName')}
+        />
+      </label>
+
+      <label
+        className={classNames(
+          'ContactForm__input-label', {
+            'ContactForm__input-label--is-error': emailError,
+          },
+        )}
+      >
+        Your email*
+        {emailError && (
+          <span className="error">
+            is required !
+          </span>
+        )}
+        <input
+          className="ContactForm__input"
+          type="email"
+          name="email"
+          value={email}
+          required
+          onChange={event => handleChange('email')(event)}
+          onBlur={() => handleBlur('email')}
+        />
+      </label>
+
+      <label className="ContactForm__input-label">
+        Your massage
+        <textarea
+          className="ContactForm__input"
+          name="massage"
+          value={massage}
+          onChange={event => handleChange('massage')(event)}
+          onBlur={() => handleBlur('massage')}
+        />
+      </label>
+
+      <ContactButton
+        type="submit"
+        className="ContactButton ContactButton--submit"
+        text="Submit"
       />
-    </label>
 
-    <label
-      className={classNames(
-        'ContactForm__input-label', {
-          'ContactForm__input-label--is-error': emailError,
-        },
-      )}
-    >
-      Your email
-      {emailError && (
-        <span className="error">
-          is required !
-        </span>
-      )}
-      <input
-        className="ContactForm__input"
-        type="email"
-        name="email"
-        value={email}
-        required
-        onChange={handleChangeEmail}
-        onBlur={handleBlurEmail}
+      <ContactButton
+        className="ContactButton ContactButton--reset"
+        onClick={handleReset}
+        text="Reset"
       />
-    </label>
 
-    <label className="ContactForm__input-label">
-      Your massage
-      <textarea
-        className="ContactForm__input"
-        name="massage"
-        value={massage}
-        onChange={handleChangeMassage}
-        onBlur={handleBlurMassage}
+      <ContactButton
+        type="button"
+        className="ContactButton ContactButton--cancel"
+        onClick={handleCancel}
+        text="Cancel"
       />
-    </label>
-
-    <ContactButton
-      type="submit"
-      className="ContactButton ContactButton--submit"
-      text="Submit"
-    />
-
-    <ContactButton
-      className="ContactButton ContactButton--reset"
-      onClick={handleReset}
-      text="Reset"
-    />
-
-    <ContactButton
-      type="button"
-      className="ContactButton ContactButton--cancel"
-      onClick={handleOpenContact}
-      text="Cancel"
-    />
-  </form>
-);
+    </form>
+  );
+});
 
 ContactForm.propTypes = {
-  handleOpenContact: PropTypes.func.isRequired,
+  formData: PropTypes.shape({
+    userName: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    massage: PropTypes.string.isRequired,
+  }).isRequired,
+  errors: PropTypes.shape({
+    userNameError: PropTypes.bool.isRequired,
+    emailError: PropTypes.bool.isRequired,
+  }).isRequired,
+  handleCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  handleChangeName: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  handleChangeEmail: PropTypes.func.isRequired,
-  massage: PropTypes.string.isRequired,
-  handleChangeMassage: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
-  nameError: PropTypes.bool.isRequired,
-  emailError: PropTypes.bool.isRequired,
-  handleBlurName: PropTypes.func.isRequired,
-  handleBlurEmail: PropTypes.func.isRequired,
-  handleBlurMassage: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
 };

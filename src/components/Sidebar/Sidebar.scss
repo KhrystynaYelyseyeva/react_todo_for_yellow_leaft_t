@@ -15,17 +15,11 @@
     margin: 40px;
   }
 
-  &__logo {
-    height: 50px;
-    width: 30px;
-    fill: #f9ba05;
-  }
-
   &__contact {
     font-size: 20px;
     color: black;
     padding: 8px 14px;
-    margin: 0 auto;
+    margin: 50px auto 0;
     display: block;
     border-radius: 5px;
     background: #f9ba05;
@@ -41,35 +35,29 @@
       transform: scale(.96);
     }
   }
+
+  &__link {
+    font-size: 18px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    padding: 8px;
+    margin: 0 auto 20px;
+    display: block;
+    width: 80%;
+    border: 1px solid transparent;
+
+    &:hover {
+      border-bottom-color: white;
+    }
+
+    &--active {
+      color: #f9ba05;
+      border-bottom-color: #f9ba05;
+    }
+  }
 }
 
 .Sidebar--active {
   transform: translateX(0);
-}
-
-.opened-burger {
-  display: block;
-  width: 20px;
-  height: 20px;
-  outline: none;
-  background: transparent;
-  border: none;
-  position: relative;
-  cursor: pointer;
-
-  &__line {
-    background: #f9ba05;
-    height: 3px;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-
-    &:first-child {
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    &:last-child {
-      transform: translateY(-50%) rotate(-45deg);
-    }
-  }
 }

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { TodoShape } from '../../../shapes/TodoShape';
 import { Todo } from './Todo/Todo';
 
-export const TodoList = ({
+export const TodoList = memo(({
   isFilter,
   todos,
   filteredTodos,
@@ -36,7 +36,7 @@ export const TodoList = ({
       }
     </ul>
   );
-};
+});
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(TodoShape).isRequired,

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from '../../Input/Input';
 import { Select } from '../../Select/Select';
 
 import './NewTodoForm.scss';
 
-export const NewTodoForm = ({ addTodo, newId }) => {
+export const NewTodoForm = memo(({ addTodo, newId }) => {
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -51,6 +51,7 @@ export const NewTodoForm = ({ addTodo, newId }) => {
       <form onSubmit={handleSubmit} className="NewTodoForm">
         <Input
           className="NewTodoForm__input"
+          classNameLabel="NewTodoForm__input-label"
           value={title}
           name="title"
           placeholder="Enter new task"
@@ -74,7 +75,7 @@ export const NewTodoForm = ({ addTodo, newId }) => {
       )}
     </>
   );
-};
+});
 
 NewTodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,

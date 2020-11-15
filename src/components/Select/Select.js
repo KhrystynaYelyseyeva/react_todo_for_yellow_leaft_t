@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import state from '../../api/initialSrate';
 
-export const Select = ({ name, value, onChange, className, defaultValue }) => (
+export const Select = memo(({
+  name,
+  value,
+  onChange,
+  className,
+  defaultValue,
+}) => (
   <label htmlFor={name} className={`${className}-label`}>
     <select
       name={name}
@@ -22,7 +28,7 @@ export const Select = ({ name, value, onChange, className, defaultValue }) => (
       ))}
     </select>
   </label>
-);
+));
 
 Select.propTypes = {
   name: PropTypes.string.isRequired,

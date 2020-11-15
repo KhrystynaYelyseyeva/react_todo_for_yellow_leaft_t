@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-export const Input = ({
+export const Input = memo(({
   name,
   value,
   onChange,
@@ -25,7 +25,7 @@ export const Input = ({
       required={required}
     />
   </label>
-);
+));
 
 Input.propTypes = {
   name: PropTypes.string.isRequired,

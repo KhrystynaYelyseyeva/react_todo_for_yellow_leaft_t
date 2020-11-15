@@ -6,3 +6,4 @@
 - Users can search the todos name.
 - Sidebar with a list of pages - active todos, completed todos and button contact us that open Modal Window (3 field Username, Message, Email) with 3 buttons Submit, Reset (Reset form-data), Cancel(Close Modal).
 - Sidebar can be hidden (toggle Open/Close button)
+- Header with Change Theme Button.
