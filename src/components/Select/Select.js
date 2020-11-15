@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { categories } from '../../api/categories';
+import state from '../../api/initialSrate';
 
-export const Select = ({ name, value, onChange, className }) => (
-  <label htmlFor={name}>
+export const Select = ({ name, value, onChange, className, defaultValue }) => (
+  <label htmlFor={name} className={`${className}-label`}>
     <select
       name={name}
       id={name}
@@ -13,9 +13,9 @@ export const Select = ({ name, value, onChange, className }) => (
       className={className}
     >
       <option value="">
-        Choose category
+        {defaultValue}
       </option>
-      {categories.map(category => (
+      {state.categories.map(category => (
         <option value={category} key={category}>
           {category}
         </option>
@@ -26,7 +26,12 @@ export const Select = ({ name, value, onChange, className }) => (
 
 Select.propTypes = {
   name: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
   className: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+};
+
+Select.defaultProps = {
+  defaultValue: 'Choose category',
 };

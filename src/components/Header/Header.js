@@ -2,34 +2,71 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Select } from '../Select/Select';
+import { Input } from '../Input/Input';
 
 import './Header.scss';
 
-export const Header = ({ onTodosFilter }) => {
+export const Header = ({
+  onTodosFilterByCategory,
+  onTodosFilterByQuery,
+  onFilter,
+  handleOpenSidebar,
+}) => {
   const [category, setCategory] = useState('');
+  const [query, setQuery] = useState('');
 
   const handleChangeSelector = ({ target }) => {
+    if (target.value === '') {
+      onFilter(false);
+      setCategory(target.value);
+
+      return;
+    }
+
+    onFilter(true);
     setCategory(target.value);
-    onTodosFilter(target.value);
+    onTodosFilterByCategory(target.value);
+  };
+
+  const handleChangeInput = ({ target }) => {
+    if (target.value === '') {
+      onFilter(false);
+      setQuery(target.value);
+
+      return;
+    }
+
+    onFilter(true);
+    setQuery(target.value);
+    onTodosFilterByQuery(target.value);
   };
 
   return (
     <header className="Header">
-      <svg
-        className="Header__logo"
-        id="icon-logo-leaf"
-        viewBox="0 0 364 604"
+      <button
+        type="button"
+        className="closed-burger"
+        onClick={handleOpenSidebar}
       >
-        <title>logo</title>
-        {/* eslint-disable-next-line max-len */}
-        <path d="M181.9,23.1c0,0,64.6,50.5,111.6,126.9l-85.2,223.2L108.1,98.6h-1C145.3,51.8,181.9,23.1,181.9,23.1z M22.2,302  c0-57.9,22.6-111.7,50.7-156.3l110.2,293.1l-40.5,106.1C95.3,497.1,22.2,406.4,22.2,302z M182.1,580.8l141.5-371  c11.1,28.8,18.2,59.8,18.2,92.2C341.6,454.1,186.1,577.7,182.1,580.8z" />
-      </svg>
+        <div className="closed-burger__line closed-burger__line--first" />
+        <div className="closed-burger__line closed-burger__line--second" />
+        <div className="closed-burger__line closed-burger__line--third" />
+      </button>
 
       <Select
-        className="Header__selector"
+        className="Header__select"
         onChange={handleChangeSelector}
         value={category}
         name="category"
+        defaultValue="Filter by categories"
+      />
+
+      <Input
+        className="Header__input"
+        placeholder="Filter by todo title"
+        onChange={handleChangeInput}
+        name="search"
+        value={query}
       />
 
       <button type="button" className="Header__btn Header__btn--dark">
@@ -41,5 +78,8 @@ export const Header = ({ onTodosFilter }) => {
 };
 
 Header.propTypes = {
-  onTodosFilter: PropTypes.func.isRequired,
+  onTodosFilterByCategory: PropTypes.func.isRequired,
+  onTodosFilterByQuery: PropTypes.func.isRequired,
+  handleOpenSidebar: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
 };

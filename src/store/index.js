@@ -4,12 +4,16 @@ import todosReducer from './todos';
 
 // #region selectors
 export function getTodos(state) {
-  return state.todos;
+  return state.todosState.todos;
+}
+
+export function getFilteredTodos(state) {
+  return state.todosState.filteredTodos;
 }
 // #endregin
 
 const reducer = combineReducers({
-  todos: todosReducer,
+  todosState: todosReducer,
 });
 
 const store = createStore(reducer);
