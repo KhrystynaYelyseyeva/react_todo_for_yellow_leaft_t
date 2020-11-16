@@ -1,5 +1,5 @@
 .Filters {
-  padding: 10px 20px;
+  padding: 10px 0;
   margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
@@ -11,12 +11,12 @@
     border-radius: 25px;
     width: 100%;
     border: 1px solid #cdcdcf;
-    background: transparent;
+    background: white;
   }
 
   &__select-label {
     flex-grow: 1;
-    margin: 0 20px 0 40px;
+    margin-right: 20px;
   }
 
   &__input {

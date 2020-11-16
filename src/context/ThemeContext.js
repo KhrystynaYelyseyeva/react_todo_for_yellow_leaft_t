@@ -1,4 +1,5 @@
 import React, { useMemo, useState, createContext } from 'react';
+import { getTheme } from '../themes/themes';
 
 export const ThemeContext = createContext({
   theme: 'light',
@@ -16,7 +17,9 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={contextValue}>
-      {children}
+      <div className={`App ${getTheme(contextValue.theme, 'app.body')}`}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 };

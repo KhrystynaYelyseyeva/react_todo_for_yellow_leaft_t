@@ -6,6 +6,9 @@ import { ContactButton } from '../ContactButton/ContactButton';
 
 import './ContactForm.scss';
 
+import { FormDataShape } from '../../../shapes/FormDataShape';
+import { FormErrorsShape } from '../../../shapes/FormErrorsShape';
+
 export const ContactForm = memo(({
   handleCancel,
   handleSubmit,
@@ -102,15 +105,8 @@ export const ContactForm = memo(({
 });
 
 ContactForm.propTypes = {
-  formData: PropTypes.shape({
-    userName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    massage: PropTypes.string.isRequired,
-  }).isRequired,
-  errors: PropTypes.shape({
-    userNameError: PropTypes.bool.isRequired,
-    emailError: PropTypes.bool.isRequired,
-  }).isRequired,
+  formData: FormDataShape.isRequired,
+  errors: FormErrorsShape.isRequired,
   handleCancel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,

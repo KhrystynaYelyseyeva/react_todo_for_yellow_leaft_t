@@ -1,4 +1,8 @@
-.Add {
+.App {
+  min-height: 100vh;
+  padding: 40px;
+  z-index: -5;
+
   &--dark {
     background: black;
     color: white;

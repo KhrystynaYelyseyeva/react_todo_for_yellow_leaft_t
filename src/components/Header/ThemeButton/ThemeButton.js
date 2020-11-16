@@ -22,7 +22,6 @@ export const ThemeButton = memo(() => {
     <button
       type="button"
       className={`ThemeButton ${getTheme(theme, 'theme.button')}`}
-      value={theme}
       onClick={handleThemeChange}
     >
       switch&nbsp;
