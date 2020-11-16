@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,14 +9,13 @@ import { Contact } from './components/Contact/Contact';
 import { CompletedPage } from './components/CompletedPage/CompletedPage';
 import { Filters } from './components/Filters/Filters';
 
-import { ThemeProvider, ThemeContext } from './context/ThemeContext';
-import { getTheme } from './themes/themes';
+import { ThemeProvider } from './context/ThemeContext';
 
 import { getTodos, getFilteredTodos } from './store/index';
 import { actions as todosActions } from './store/todos';
 
-import './styles/general.scss';
 import './App.scss';
+import './styles/general.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +24,6 @@ function App() {
   const [isFilter, setIsFilter] = useState(false);
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const [isOpenContact, setIsOpenContact] = useState(false);
-
-  const { theme } = useContext(ThemeContext);
 
   const addTodo = (todo) => {
     dispatch(todosActions.add(todo));
@@ -71,7 +68,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className={`App ${getTheme(theme, 'app.body')}`}>
+      <>
         <Header
           onTodosFilterByCategory={onTodosFilterByCategory}
           onTodosFilterByQuery={onTodosFilterByQuery}
@@ -139,7 +136,7 @@ function App() {
             handleOpenContact={handleOpenContact}
           />
         )}
-      </div>
+      </>
     </ThemeProvider>
   );
 }

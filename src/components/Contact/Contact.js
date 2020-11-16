@@ -47,7 +47,7 @@ export const Contact = memo(({ handleOpenContact }) => {
     handleOpenContact();
   }, []);
 
-  const handleSubmit = useCallback((event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     if (formData.userName.length < 2) {
@@ -69,7 +69,7 @@ export const Contact = memo(({ handleOpenContact }) => {
     }
 
     setIsSuccess(true);
-  }, []);
+  };
 
   const handleBlur = (name) => {
     setFormData(oldData => ({
